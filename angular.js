@@ -8093,50 +8093,50 @@ function $LocationProvider(){
     });
 
 
-    // rewrite hashbang url <> html5 url
-    if ($location.absUrl() != initialUrl) {
-      $browser.url($location.absUrl(), true);
-    }
+    //// rewrite hashbang url <> html5 url
+    //if ($location.absUrl() != initialUrl) {
+    //  $browser.url($location.absUrl(), true);
+    //}
 
-    // update $location when $browser url changes
-    $browser.onUrlChange(function(newUrl) {
-      if ($location.absUrl() != newUrl) {
-        if ($rootScope.$broadcast('$locationChangeStart', newUrl, $location.absUrl()).defaultPrevented) {
-          $browser.url($location.absUrl());
-          return;
-        }
-        $rootScope.$evalAsync(function() {
-          var oldUrl = $location.absUrl();
+    //// update $location when $browser url changes
+    //$browser.onUrlChange(function(newUrl) {
+    //  if ($location.absUrl() != newUrl) {
+    //    if ($rootScope.$broadcast('$locationChangeStart', newUrl, $location.absUrl()).defaultPrevented) {
+    //      $browser.url($location.absUrl());
+    //      return;
+    //    }
+    //    $rootScope.$evalAsync(function() {
+    //      var oldUrl = $location.absUrl();
+    //
+    //      $location.$$parse(newUrl);
+    //      afterLocationChange(oldUrl);
+    //    });
+    //    if (!$rootScope.$$phase) $rootScope.$digest();
+    //  }
+    //});
 
-          $location.$$parse(newUrl);
-          afterLocationChange(oldUrl);
-        });
-        if (!$rootScope.$$phase) $rootScope.$digest();
-      }
-    });
-
-    // update browser
-    var changeCounter = 0;
-    $rootScope.$watch(function $locationWatch() {
-      var oldUrl = $browser.url();
-      var currentReplace = $location.$$replace;
-
-      if (!changeCounter || oldUrl != $location.absUrl()) {
-        changeCounter++;
-        $rootScope.$evalAsync(function() {
-          if ($rootScope.$broadcast('$locationChangeStart', $location.absUrl(), oldUrl).
-              defaultPrevented) {
-            $location.$$parse(oldUrl);
-          } else {
-            $browser.url($location.absUrl(), currentReplace);
-            afterLocationChange(oldUrl);
-          }
-        });
-      }
-      $location.$$replace = false;
-
-      return changeCounter;
-    });
+    //// update browser
+    //var changeCounter = 0;
+    //$rootScope.$watch(function $locationWatch() {
+    //  var oldUrl = $browser.url();
+    //  var currentReplace = $location.$$replace;
+    //
+    //  if (!changeCounter || oldUrl != $location.absUrl()) {
+    //    changeCounter++;
+    //    $rootScope.$evalAsync(function() {
+    //      if ($rootScope.$broadcast('$locationChangeStart', $location.absUrl(), oldUrl).
+    //          defaultPrevented) {
+    //        $location.$$parse(oldUrl);
+    //      } else {
+    //        $browser.url($location.absUrl(), currentReplace);
+    //        afterLocationChange(oldUrl);
+    //      }
+    //    });
+    //  }
+    //  $location.$$replace = false;
+    //
+    //  return changeCounter;
+    //});
 
     return $location;
 
